@@ -1,4 +1,3 @@
-enum NodeType { elevator, stairs, room, toilet, foodSpot, drinkSpot }
 import 'konstanz_csv.dart';
 
 enum NodeType { elevator, stairs, room, hallway, toilet, foodSpot, drinkSpot }
@@ -58,8 +57,10 @@ class Node {
   late final List<String> searchKeywords;
   late final List<String> processedNames;
   late final String processedName;
+  late final x;
+  late final y;
 
-  Node(this.id, this.floor, this.name, this.type,
+  Node(this.id, this.floor, this.name, this.type, this.x, this.y,
       {this.allowDisabled = true, String keywords = ""}) {
     searchKeywords = keywords.split(separator);
     processedNames = List.generate(
@@ -75,7 +76,9 @@ class Node {
     floor = int.parse(data[1]);
     type = NodeType.values.byName(data[2]);
     allowDisabled = bool.parse(data[3], caseSensitive: false);
-    searchKeywords = data.sublist(4);
+    x = data[4];
+    y = data[5];
+    searchKeywords = data.sublist(6);
     processedName = name.toLowerCase().replaceAll(RegExp(r'\s'), "");
     processedNames = List.generate(
         searchKeywords.length,
