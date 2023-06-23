@@ -1,13 +1,28 @@
 import 'dart:collection';
 import 'graph.dart';
 
-var nodes_visited_status = HashSet<Node>();
-var nodes_distance = HashSet<Node>();
-va
+class Dijkstra {
+  List<(Node, bool)> visited_nodes = [];
+  HashMap<Node, int> nodes_distance = HashMap<Node, int>();
+  //List<Edge> graph;
+  List<Edge> edges;
+  List<Node> nodes;
 
-void dijkstra_setup(Edge[] graph){
+  Dijkstra(this.nodes, this.edges);
 
+  void setupDijkstra() {
+    for (Node n in nodes){
+      visited_nodes.add((n, false));
+    }
+  }
+
+
+  void dijkstra(){
+    for (int i = 0; i < graph.length; i++) {
+      nodes_visited_status[] = false;
+      visited_nodes.
+    }
+  }
+
+  (Node, bool) getIndexOrNegOne(Node )
 }
-
-
-void dijkstra(in)
