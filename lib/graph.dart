@@ -1,3 +1,4 @@
+enum NodeType { elevator, stairs, room, toilet, foodSpot, drinkSpot }
 import 'konstanz_csv.dart';
 
 enum NodeType { elevator, stairs, room, hallway, toilet, foodSpot, drinkSpot }

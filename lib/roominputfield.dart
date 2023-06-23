@@ -6,7 +6,6 @@ class MyForm extends StatefulWidget {
   @override
   RoomInputField createState() => RoomInputField();
 }
-
 class RoomInputField extends State<MyForm> {
   String _inputText = '';
   List<String> _options = [];
