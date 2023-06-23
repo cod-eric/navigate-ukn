@@ -6,6 +6,7 @@ Graph uniKonstanz = Graph.fromString(konstanzNodes, konstanzEdges);
 
 class Tuple<T, R> {
   Tuple(this.one, this.two);
+
   final T one;
   final R two;
 }
@@ -41,7 +42,6 @@ class Graph {
         ret.add(n);
       }
     }
-    ret.forEach(print);
     return ret;
   }
 }
@@ -56,27 +56,17 @@ class Node {
   late final List<String> searchKeywords;
   late final List<String> processedNames;
   late final String processedName;
-  late final x;
-  late final y;
-
-  Node(this.id, this.floor, this.name, this.type, this.x, this.y,
-      {this.allowDisabled = true, String keywords = ""}) {
-    searchKeywords = keywords.split(separator);
-    processedNames = List.generate(
-        searchKeywords.length,
-        (index) =>
-            searchKeywords[index].toLowerCase().replaceAll(RegExp(r'\s'), ""));
-  }
+  late final int x;
+  late final int y;
 
   Node.fromCSV(List<String> data) {
     id = nextId++;
     name = data[0];
-    //print(data);
     floor = int.parse(data[1]);
     type = NodeType.values.byName(data[2]);
     allowDisabled = bool.parse(data[3], caseSensitive: false);
-    x = data[4];
-    y = data[5];
+    x = int.parse(data[4]);
+    y = int.parse(data[5]);
     searchKeywords = data.sublist(6);
     processedName = name.toLowerCase().replaceAll(RegExp(r'\s'), "");
     processedNames = List.generate(

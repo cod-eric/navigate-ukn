@@ -29,24 +29,36 @@ class _HomeState extends State<Home> {
       ),
       body: Container(
         padding: const EdgeInsets.all(40),
-        child:
-            Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          buildSearchBar(context, "Current Location", true),
-          buildSearchBar(context, "Target", false),
-          ElevatedButton(
-              onPressed: from == null || to == null || from == to
-                  ? null
-                  : () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (BuildContext context) => NavPage(from!, to!))),
-              child: const Text("Find path"))
-        ]),
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              buildSearchBar(context, "Current Location", true, [
+                IconButton(
+                    onPressed: () => setState(() {
+                          var temp = to;
+                          to = from;
+                          from = temp;
+                        }),
+                    icon: const Icon(Icons.swap_vert))
+              ]),
+              buildSearchBar(context, "Target", false, []),
+              ElevatedButton(
+                  onPressed: from == null || to == null || from == to
+                      ? null
+                      : () => Navigator.of(context).push(MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              NavPage(from!, to!))),
+                  child: const Text("Find path"))
+            ]),
       ),
     );
   }
 
-  SearchBar buildSearchBar(BuildContext context, String hintText, bool isFrom) {
+  SearchBar buildSearchBar(BuildContext context, String hintText, bool isFrom,
+      Iterable<Widget>? trailing) {
     var node = isFrom ? from : to;
     return SearchBar(
+      trailing: trailing,
       backgroundColor: node != null
           ? from != to
               ? const MaterialStatePropertyAll(Colors.green)

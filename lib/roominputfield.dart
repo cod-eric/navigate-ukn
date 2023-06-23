@@ -13,8 +13,7 @@ class RoomInputForm extends StatefulWidget {
 
 class RoomInputField extends State<RoomInputForm> {
   static const int maxItems = 5;
-  Node? selected;
-  List<Node> _options = [];
+  List<Node> _options = uniKonstanz.nodes;
 
   List<Node> search(String input) {
     return uniKonstanz.search(input);
@@ -36,7 +35,8 @@ class RoomInputField extends State<RoomInputForm> {
               labelText: widget.placeholder,
             ),
           ),
-          const Text('Available Options:'),
+          const Text("Available Options:"),
+          // TODO Gabriel Scrollable
           ListView.builder(
             shrinkWrap: true,
             itemCount: _options.length,
