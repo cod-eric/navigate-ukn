@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:navigate_ukn/graph.dart';
+import 'main.dart';
 
 class RoomInputField extends StatelessWidget with InputValidationMixin {
   final formGlobalKey = GlobalKey<FormState>();
@@ -48,11 +50,13 @@ class RoomInputField extends StatelessWidget with InputValidationMixin {
 }
 
 mixin InputValidationMixin {
-  List<String> suggestons = ["USA", "UK", "Uganda", "Uruguay", "United Arab Emirates"];
-  bool isRoomValid(String password) {
+  List<Tuple<List<String>, int>> roomnames = uniKonstanz.roomnames.cast<Tuple<List<String>, int>>();
 
-
-    return true;
+  int isRoomValid(String room) {
+    for (Tuple t in roomnames) {
+      if (t.one.contains())
+    }
+    return -1;
   }
 
 }
