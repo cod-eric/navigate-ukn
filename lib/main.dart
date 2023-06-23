@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:navigate_ukn/roominputfield.dart';
 
+import 'graph.dart';
+
+Graph uniKonstanz = Graph(List.empty(), List.empty());
+
 void main() {
   runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: FormValidationExample(),
-  ));
+      debugShowCheckedModeBanner: false,
+      home: MaterialApp(
+          home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Navigate the Uni'),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: RoomInputField(),
+        ),
+      ))));
 }
-

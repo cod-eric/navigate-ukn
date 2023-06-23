@@ -1,7 +1,14 @@
 enum NodeType { elevator, stairs, room, toilet, foodSpot, drinkSpot }
 
+class Tuple<T, R> {
+  Tuple(this.one, this.two);
+  final T one;
+  final R two;
+}
+
 class Graph {
   Graph(this.nodes, this.edges);
+
   final List<Node> nodes;
   final List<Edge> edges;
 }
