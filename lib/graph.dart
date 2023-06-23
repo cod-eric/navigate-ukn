@@ -1,4 +1,3 @@
-enum NodeType { elevator, stairs, room, toilet, foodSpot, drinkSpot }
 import 'konstanz_csv.dart';
 
 enum NodeType { elevator, stairs, room, hallway, toilet, foodSpot, drinkSpot }
@@ -35,7 +34,6 @@ class Graph {
   List<Node> search(String input) {
     List<Node> ret = [];
     String processedName = input.toLowerCase().replaceAll(RegExp(r'\s'), "");
-    print(processedName);
 
     for (Node n in nodes) {
       if (n.processedName.contains(processedName) ||
@@ -93,7 +91,7 @@ class Node {
 
   @override
   String toString() {
-    return "" + name + ", " + processedNames.toString();
+    return "$name, $processedNames";
   }
 }
 
