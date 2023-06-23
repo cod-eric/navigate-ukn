@@ -34,14 +34,15 @@ class Graph {
   List<Node> search(String input) {
     List<Node> ret = [];
     String processedName = input.toLowerCase().replaceAll(RegExp(r'\s'), "");
+    print(processedName);
 
     for (Node n in nodes) {
-      if (n.name.contains(processedName) ||
+      if (n.processedName.contains(processedName) ||
           n.processedNames.any((element) => element.contains(processedName))) {
         ret.add(n);
       }
     }
-    print(ret);
+    ret.forEach(print);
     return ret;
   }
 }
@@ -55,6 +56,7 @@ class Node {
   late final bool allowDisabled;
   late final List<String> searchKeywords;
   late final List<String> processedNames;
+  late final String processedName;
 
   Node(this.id, this.floor, this.name, this.type,
       {this.allowDisabled = true, String keywords = ""}) {
@@ -68,11 +70,12 @@ class Node {
   Node.fromCSV(List<String> data) {
     id = nextId++;
     name = data[0];
-    print(data);
+    //print(data);
     floor = int.parse(data[1]);
     type = NodeType.values.byName(data[2]);
     allowDisabled = bool.parse(data[3], caseSensitive: false);
     searchKeywords = data.sublist(4);
+    processedName = name.toLowerCase().replaceAll(RegExp(r'\s'), "");
     processedNames = List.generate(
         searchKeywords.length,
         (index) =>
@@ -85,6 +88,11 @@ class Node {
   @override
   bool operator ==(Object other) {
     return other is Node && id == other.id;
+  }
+
+  @override
+  String toString() {
+    return "" + name + ", " + processedNames.toString();
   }
 }
 
