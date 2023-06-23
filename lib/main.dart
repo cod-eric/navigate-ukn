@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:navigate_ukn/roominputfield.dart';
 
-import 'graph.dart';
 
-Graph uniKonstanz = Graph(List.empty(), List.empty());
+
 
 void main() {
   runApp(MaterialApp(
@@ -15,7 +14,7 @@ void main() {
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: RoomInputField(),
+          child: MyForm(),
         ),
       ))));
 }

@@ -1,6 +1,7 @@
 import 'dart:js_util';
-import 'graph.dart';
 import 'package:dijkstra/dijkstra.dart';
+
+import 'graph.dart';
 
 class DijkstraWalk {
   late List<Edge> edges;
