@@ -2,6 +2,7 @@ import 'dart:js_util';
 import 'graph.dart';
 import 'package:dijkstra/dijkstra.dart';
 
+///Find shortest path between two nodes.
 class DijkstraWalk {
   late List<Edge> edges;
   late List<Node> nodes;
@@ -9,13 +10,19 @@ class DijkstraWalk {
   late Map<int, Map<int, int>> graph;
   late Map<int, Node> nodeHashMap;
 
+  ///Initializes DijkstraWalk.
+  ///
+  /// [nods] the list of all `Node`s in the graph.
+  /// [edgs] the list of all `Edge`s in the graph.
   DijkstraWalk(List<Node> nods, List<Edge> edgs) {
     nodes = nods;
     edges = edgs;
     nodesCnt = nods.length;
+    _buildDijkstra();
   }
 
-  void buildDijkstra() {
+   /// Builds the dijkstra graph for dijkstra.dart.
+  void _buildDijkstra() {
     graph = {};
     nodeHashMap = {};
 
@@ -30,6 +37,11 @@ class DijkstraWalk {
     }
   }
 
+  /// Finds the shortest path between [src] and [dst], if exists.
+  ///
+  /// [src] The source `Node`
+  /// [dst] The destination `Node`
+  /// [returns] A list of `Node`s in the path order to get from [src] to [dst]. Returns an empty List if no path exists.
   List<Node> dijkstra(Node src, Node dst){
     List dijPath = Dijkstra.findPathFromGraph(graph, src.id, dst.id);
 
