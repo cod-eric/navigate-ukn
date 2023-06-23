@@ -1,63 +1,57 @@
 import 'package:flutter/material.dart';
-import 'package:navigate_ukn/graph.dart';
-import 'main.dart';
+import 'graph.dart';
 
-class RoomInputField extends StatelessWidget with InputValidationMixin {
-  final formGlobalKey = GlobalKey<FormState>();
+class MyForm extends StatefulWidget {
+  @override
+  RoomInputField createState() => RoomInputField();
+}
+
+class RoomInputField extends State<MyForm> {
+  String _inputText = '';
+  List<String> _options = [];
+
+  void _updateOptions(String input) {
+    // Call your search function here and update the options based on the input
+    _options = search(input).map((e) => e.name).toList();
+  }
+
+  List<Node> search(String input) {
+    return uniKonstanz.search(input);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-        key: formGlobalKey,
+    return Scaffold(
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
         child: Column(
           children: [
-            const SizedBox(height: 50),
             TextFormField(
-              decoration: const InputDecoration(labelText: "your location"),
-              validator: (email) {
-                if (isRoomValid(email!)) {
-                  return null;
-                } else {
-                  return 'Enter a valid location';
-                }
+              onChanged: (value) {
+                setState(() {
+                  _inputText = value;
+                  _updateOptions(value);
+                });
               },
-            ),
-            const SizedBox(height: 24),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: "your destination",
+              decoration: InputDecoration(
+                labelText: 'Search',
               ),
-              validator: (password) {
-                if (isRoomValid(password!)) {
-                  return null;
-                } else {
-                  return 'Enter a valid location';
-                }
+            ),
+            SizedBox(height: 16.0),
+            Text('Available Options:'),
+            SizedBox(height: 8.0),
+            ListView.builder(
+              shrinkWrap: true,
+              itemCount: _options.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(_options[index]),
+                );
               },
             ),
-            const SizedBox(height: 50),
-            ElevatedButton(
-                onPressed: () {
-                  if (formGlobalKey.currentState!.validate()) {
-                    formGlobalKey.currentState?.save();
-                    // use the email provided here
-                  }
-                },
-                child: const Text("calculate route"))
           ],
-        ));
+        ),
+      ),
+    );
   }
 }
-
-mixin InputValidationMixin {
-  List<Tuple<List<String>, int>> roomnames = uniKonstanz.roomnames.cast<Tuple<List<String>, int>>();
-
-  int isRoomValid(String room) {
-    for (Tuple t in roomnames) {
-      if (t.one.contains())
-    }
-    return -1;
-  }
-
-}
-

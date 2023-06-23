@@ -1,6 +1,8 @@
-
+import 'konstanz_csv.dart';
 
 enum NodeType { elevator, stairs, room, toilet, foodSpot, drinkSpot }
+
+Graph uniKonstanz = Graph.fromString(konstanzNodes, konstanzEdges);
 
 class Tuple<T, R> {
   Tuple(this.one, this.two);
@@ -11,38 +13,71 @@ class Tuple<T, R> {
 class Graph {
   Graph(this.nodes, this.edges);
 
-  final List<Node> nodes;
-  final List<Edge> edges;
+  late final List<Node> nodes;
+  late final List<Edge> edges;
+
+  Graph.fromString(String nodeData, String edgeData) {
+    nodes = nodeData
+        .split("\n")
+        .skip(1) // skip header
+        .map((e) => Node.fromCSV(e.split(separator)))
+        .toList();
+    edges = edgeData
+        .split("\n")
+        .skip(1) // skip header
+        .map((e) => Edge.fromCSV(e.split(separator), nodes))
+        .toList();
+  }
 
   List<Node> search(String input) {
     List<Node> ret = [];
     String processedName = input.toLowerCase().replaceAll(RegExp(r'\s'), "");
 
     for (Node n in nodes) {
-      if (n.name.contains(processedName) || n.processedNames.any((element) => element.contains(processedName)))
+      if (n.name.contains(processedName) ||
+          n.processedNames.any((element) => element.contains(processedName))) {
+        ret.add(n);
+      }
     }
+    print(ret);
     return ret;
   }
 }
 
 class Node {
-  final int id;
-  final String roomNr;
-  final String name;
-  final NodeType type;
-  final bool allowDisabled;
-  late  final List<String> searchKeywords;
-  late  final List<String> processedNames;
+  static int nextId = 0;
+  late final int id;
+  late final String name;
+  late final int floor;
+  late final NodeType type;
+  late final bool allowDisabled;
+  late final List<String> searchKeywords;
+  late final List<String> processedNames;
 
-  Node(this.id, this.roomNr, this.name, this.type,
-      {this.allowDisabled = true, String keywords = ""})
-      {    searchKeywords = keywords.split(';');
-        processedNames = List.generate(searchKeywords.length,
-                        (index) => searchKeywords[index].toLowerCase().
-                        replaceAll(RegExp(r'\s'), ""));}
-  factory fromJson(){
-    return 
+  Node(this.id, this.floor, this.name, this.type,
+      {this.allowDisabled = true,      String keywords = ""}) {
+    searchKeywords = keywords.split(separator);
+    processedNames = List.generate(
+        searchKeywords.length,
+        (index) =>
+            searchKeywords[index].toLowerCase().replaceAll(RegExp(r'\s'), ""));
   }
+
+  Node.fromCSV(List<String> data) {
+    id = nextId++;
+    name = data[0];
+    floor = int.parse(data[1]);
+    type = NodeType.values.byName(data[2]);
+    if (data.length > 2) {
+      allowDisabled = bool.parse(data[3], caseSensitive: false);
+    }
+    searchKeywords = data.sublist(4);
+    processedNames = List.generate(
+        searchKeywords.length,
+            (index) =>
+            searchKeywords[index].toLowerCase().replaceAll(RegExp(r'\s'), ""));
+  }
+
   @override
   int get hashCode => id;
 
@@ -53,10 +88,18 @@ class Node {
 }
 
 class Edge {
-  Edge(this.id, this.from, this.to, this.weight, {this.allowDisabled = true});
+  Edge(this.from, this.to, this.weight, {this.allowDisabled = true});
 
-  final int id;
-  final int weight;
-  final Node from, to;
-  final bool allowDisabled;
+  late final int weight;
+  late final Node from, to;
+  late final bool allowDisabled;
+
+  Edge.fromCSV(List<String> data, List<Node> nodes) {
+    from = nodes[int.parse(data[0])];
+    to = nodes[int.parse(data[1])];
+    weight = int.parse(data[2]);
+    if (data.length >= 3) {
+      allowDisabled = bool.parse(data[3], caseSensitive: false);
+    }
+  }
 }
