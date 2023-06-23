@@ -1,7 +1,6 @@
-const String separator = ';';
+const String separator = ',';
 
-const String konstanzNodes = """name,floor,type,keywords
-name,floor,type,barrier-free,keywords
+const String konstanzNodes = """name,floor,type,barrier-free,keywords
 Immobetriebe Empfang,0,hallway,TRUE,
 Immobetriebe Büro,0,room,TRUE,
 Farm Kueche,0,room,TRUE,0.01

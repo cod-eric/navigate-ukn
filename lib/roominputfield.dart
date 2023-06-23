@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'graph.dart';
 
 class MyForm extends StatefulWidget {
@@ -27,6 +28,7 @@ class RoomInputField extends State<MyForm> {
         child: Column(
           children: [
             TextFormField(
+              autofocus: true,
               onChanged: (value) {
                 setState(() {
                   _inputText = value;

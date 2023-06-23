@@ -1,6 +1,6 @@
 import 'konstanz_csv.dart';
 
-enum NodeType { elevator, stairs, room, toilet, foodSpot, drinkSpot }
+enum NodeType { elevator, stairs, room, hallway, toilet, foodSpot, drinkSpot }
 
 Graph uniKonstanz = Graph.fromString(konstanzNodes, konstanzEdges);
 
@@ -18,11 +18,13 @@ class Graph {
 
   Graph.fromString(String nodeData, String edgeData) {
     nodes = nodeData
+        .trim()
         .split("\n")
         .skip(1) // skip header
         .map((e) => Node.fromCSV(e.split(separator)))
         .toList();
     edges = edgeData
+        .trim()
         .split("\n")
         .skip(1) // skip header
         .map((e) => Edge.fromCSV(e.split(separator), nodes))
@@ -55,7 +57,7 @@ class Node {
   late final List<String> processedNames;
 
   Node(this.id, this.floor, this.name, this.type,
-      {this.allowDisabled = true,      String keywords = ""}) {
+      {this.allowDisabled = true, String keywords = ""}) {
     searchKeywords = keywords.split(separator);
     processedNames = List.generate(
         searchKeywords.length,
@@ -66,15 +68,14 @@ class Node {
   Node.fromCSV(List<String> data) {
     id = nextId++;
     name = data[0];
+    print(data);
     floor = int.parse(data[1]);
     type = NodeType.values.byName(data[2]);
-    if (data.length > 2) {
-      allowDisabled = bool.parse(data[3], caseSensitive: false);
-    }
+    allowDisabled = bool.parse(data[3], caseSensitive: false);
     searchKeywords = data.sublist(4);
     processedNames = List.generate(
         searchKeywords.length,
-            (index) =>
+        (index) =>
             searchKeywords[index].toLowerCase().replaceAll(RegExp(r'\s'), ""));
   }
 
