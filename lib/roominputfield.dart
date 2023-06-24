@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 import 'graph.dart';
 
@@ -40,6 +41,7 @@ class RoomInputField extends State<RoomInputForm> {
           const Text("Available Options:"),
           // TODO Gabriel Scrollable
           ListView.builder(
+            scrollDirection: Axis.vertical,
             shrinkWrap: true,
             itemCount: min(MediaQuery.of(context).size.height ~/ 100, _options.length), //_options.length,
             itemBuilder: (context, index) {

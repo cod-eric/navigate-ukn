@@ -61,6 +61,7 @@ class Node {
   late final double y;
 
   Node.fromCSV(List<String> data) {
+    print("Reading $data");
     id = int.parse(data[0]);
     name = data[1];
     floor = int.parse(data[2]);
