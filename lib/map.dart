@@ -32,7 +32,7 @@ class _NavPageState extends State<NavPage> {
       body: Column(
         children: [
           Padding(
-              padding: EdgeInsets.all(),
+              padding: const EdgeInsets.all(20),
               child: Text(
                 "Floor $floor",
                 style: const TextStyle(
@@ -56,9 +56,25 @@ class _NavPageState extends State<NavPage> {
                       widget.to)),
             ]),
           ),
+          DropdownButton(
+              hint: const Text("Floor"),
+              items: createItems(widget.from.floor, widget.to.floor),
+              onChanged: (value) => setState(() {
+                    floor = value;
+                  }))
         ],
       ),
     );
+  }
+
+  List<DropdownMenuItem> createItems(int from, int to) {
+    List<DropdownMenuItem> l = [];
+    for (int i = from; i <= to; i++) {
+      l.add(DropdownMenuItem(
+        child: Text("Floor: $i"),
+      ));
+    }
+    return l;
   }
 }
 
@@ -78,16 +94,15 @@ class LinePainter extends CustomPainter {
       canvas.drawLine(Offset(xScale * path[i].x, yScale * path[i].y),
           Offset(xScale * path[i + 1].x, yScale * path[i + 1].y), paint);
       //print("${xScale * path[i].x}, ${yScale * path[i].y}");
-      if (path[i] == from || path[i] == to) {}
+      if (path[i] == from || path[i] == to) {
+        canvas.drawCircle(
+            Offset(path[i].x, path[i].y), 8, Paint()..color = Colors.black);
+      }
     }
-    // Add more lines as needed
-
-    // You can also draw other shapes using canvas methods
-    // For example: canvas.drawCircle(), canvas.drawRect(), etc.
   }
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false; // Set to true if the lines need to be redrawn
+    return false;
   }
 }

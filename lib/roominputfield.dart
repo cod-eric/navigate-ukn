@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import 'graph.dart';
@@ -16,7 +18,7 @@ class RoomInputField extends State<RoomInputForm> {
   List<Node> _options = uniKonstanz.nodes;
 
   List<Node> search(String input) {
-    return uniKonstanz.search(input);
+    return uniKonstanz.search(input, true /*defualt, TODO: change*/);
   }
 
   @override
@@ -39,7 +41,7 @@ class RoomInputField extends State<RoomInputForm> {
           // TODO Gabriel Scrollable
           ListView.builder(
             shrinkWrap: true,
-            itemCount: _options.length,
+            itemCount: min(MediaQuery.of(context).size.height ~/ 100, _options.length), //_options.length,
             itemBuilder: (context, index) {
               var node = _options[index];
               return ListTile(

@@ -16,6 +16,10 @@ class Graph {
 
   late final List<Node> nodes;
   late final List<Edge> edges;
+  static const List<NodeType> notSearchable = [
+    NodeType.hallway,
+    NodeType.stairs
+  ];
 
   Graph.fromString(String nodeData, String edgeData) {
     nodes = nodeData
@@ -34,17 +38,14 @@ class Graph {
         .toList();
   }
 
-  List<Node> search(String input) {
-    List<Node> ret = [];
+  List<Node> search(String input, bool allowDisabled) {
     String processedName = input.toLowerCase().replaceAll(RegExp(r'\s'), "");
 
-    for (Node n in nodes) {
-      if (n.processedName.contains(processedName) ||
-          n.processedNames.any((element) => element.contains(processedName))) {
-        ret.add(n);
-      }
-    }
-    return ret;
+    return nodes
+        .where((n) =>
+            !notSearchable.contains(n.type) &&
+            n.processedNames.any((element) => element.contains(processedName)))
+        .toList();
   }
 }
 
@@ -56,7 +57,6 @@ class Node {
   late final bool allowDisabled;
   late final List<String> searchKeywords;
   late final List<String> processedNames;
-  late final String processedName;
   late final double x;
   late final double y;
 
@@ -69,11 +69,11 @@ class Node {
     x = double.parse(data[5]);
     y = double.parse(data[6]);
     searchKeywords = data.sublist(7);
-    processedName = name.toLowerCase().replaceAll(RegExp(r'\s'), "");
     processedNames = List.generate(
         searchKeywords.length,
         (index) =>
-            searchKeywords[index].toLowerCase().replaceAll(RegExp(r'\s'), ""));
+            searchKeywords[index].toLowerCase().replaceAll(RegExp(r'\s'), ""))
+      ..insert(0, name.toLowerCase().replaceAll(RegExp(r'\s'), ""));
   }
 
   @override

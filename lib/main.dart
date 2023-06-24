@@ -5,7 +5,7 @@ import 'graph.dart';
 import 'map.dart';
 
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     debugShowCheckedModeBanner: false,
     home: Home(),
   ));
