@@ -25,6 +25,7 @@ const String konstanzNodes = """name,floor,type,barrier-free,keywords,id,x,y
 21,Aufzug Ost ,0,elevator,TRUE,51,5,
 22,farm,0,room,TRUE,37,10,0.13
 23,Toilette Männer Ost 2 ,0,toilet,FALSE,57,13,
+,,,,,,,
 25,Aufzug West ,0,elevator,TRUE,8,5,
 26,Putzen,0,cleaning,TRUE,52,3,
 27,Treppe West ,0,stairs,FALSE,2,3,
@@ -52,15 +53,54 @@ const String konstanzNodes = """name,floor,type,barrier-free,keywords,id,x,y
 49,,0,hallway,TRUE,57,10,
 50,,0,hallway,TRUE,55,5,
 """;
-const String konstanzEdges = """from,to,weight
-0,1,2
-0,3,6
-2,9,3
-4,3,5
-3,4,2
-1,2,3
-3,2,1
-0,2,1
-3,4,1
-3,2,6
-4,5,10""";
+const String konstanzEdges = """
+from,to,weight
+0,34,1
+1,35,1
+2,36,1
+3,37,1
+4,38,1
+5,39,1
+6,40,1
+7,41,1
+8,42,1
+9,43,1
+10,44,1
+11,47,1
+12,37,1
+13,39,1
+14,40,1
+15,41,1
+16,45,1
+17,44,1
+18,43,1
+19,47,1
+20,46,1
+21,49,1
+22,42,1
+23,47,1
+25,33,1
+26,50,1
+27,32,1
+28,50,1
+29,32,1
+30,31,1
+31,32,1
+32,33,1
+33,34,1
+34,35,1
+35,36,1
+36,37,1
+37,38,1
+38,39,1
+39,40,1
+40,41,1
+41,42,1
+42,43,1
+43,44,1
+44,45,1
+45,46,1
+46,47,1
+47,48,1
+48,49,1
+49,50,1""";

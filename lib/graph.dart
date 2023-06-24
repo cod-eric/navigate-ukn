@@ -1,6 +1,6 @@
 import 'konstanz_csv.dart';
 
-enum NodeType { elevator, stairs, room, hallway, toilet, foodSpot, drinkSpot }
+enum NodeType { elevator, stairs, room, hallway, toilet, foodSpot, drinkSpot, cleaning, shower}
 
 Graph uniKonstanz = Graph.fromString(konstanzNodes, konstanzEdges);
 
@@ -18,22 +18,23 @@ class Graph {
   late final List<Edge> edges;
   static const List<NodeType> notSearchable = [
     NodeType.hallway,
-    NodeType.stairs
+    NodeType.stairs,
   ];
+
 
   Graph.fromString(String nodeData, String edgeData) {
     nodes = nodeData
         .trim()
         .split("\n")
         .skip(1) // skip header
-        .where((e) => e.isNotEmpty)
+        .where((e) => e.indexOf(RegExp(r',')) != 0 && e.isNotEmpty)
         .map((e) => Node.fromCSV(e.split(separator)))
         .toList();
     edges = edgeData
         .trim()
         .split("\n")
         .skip(1) // skip header
-        .where((e) => e.isNotEmpty)
+        .where((e) => e.indexOf(RegExp(r',')) != 0 && e.isNotEmpty)
         .map((e) => Edge.fromCSV(e.split(separator), nodes))
         .toList();
   }
@@ -87,7 +88,7 @@ class Node {
 
   @override
   String toString() {
-    return "$name, $processedNames";
+    return "$name, $type, $x, $y";
   }
 }
 
@@ -99,13 +100,17 @@ class Edge {
   late final bool allowDisabled;
 
   Edge.fromCSV(List<String> data, List<Node> nodes) {
-    from = nodes[int.parse(data[0])];
-    to = nodes[int.parse(data[1])];
+    print("Reading $data");
+    print(nodes.length);
+    from = nodes.singleWhere((element) => element.id == int.parse(data[0]));
+    to = nodes.singleWhere((element) => element.id == int.parse(data[1]));
     weight = int.parse(data[2]);
     if (data.length > 3) {
       allowDisabled = bool.parse(data[3], caseSensitive: false);
     } else {
       allowDisabled = false;
     }
+
+    nodes.forEach(print);
   }
 }

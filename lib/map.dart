@@ -48,8 +48,8 @@ class _NavPageState extends State<NavPage> {
               CustomPaint(
                   painter: LinePainter(
                       path.where((e) => e.floor == floor).toList(),
-                      MediaQuery.of(context).size.width / 20,
-                      MediaQuery.of(context).size.height / 20,
+                      MediaQuery.of(context).size.width / 60.0,
+                      MediaQuery.of(context).size.height / 20.0,
                       widget.from,
                       widget.to)),
             ]),
@@ -89,12 +89,12 @@ class LinePainter extends CustomPainter {
       ..strokeWidth = 4.0;
 
     for (int i = 0; i < path.length - 1; i++) {
-      canvas.drawLine(Offset(xScale * path[i].x, yScale * path[i].y),
-          Offset(xScale * path[i + 1].x, yScale * path[i + 1].y), paint);
-      //print("${xScale * path[i].x}, ${yScale * path[i].y}");
+      canvas.drawLine(Offset(xScale * path[i].x, yScale * (20 - path[i].y)),
+          Offset(xScale * path[i + 1].x, yScale * (20 - path[i + 1].y)), paint);
+      print("${xScale * path[i].x}, ${yScale * path[i].y}");
       if (path[i] == from || path[i] == to) {
         canvas.drawCircle(
-            Offset(path[i].x, path[i].y), 8, Paint()..color = Colors.black);
+            Offset(xScale * path[i].x, yScale * (20 - path[i].y)), 8, Paint()..color = Colors.black);
       }
     }
   }
