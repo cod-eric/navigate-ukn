@@ -5,8 +5,9 @@ import 'graph.dart';
 
 class NavPage extends StatefulWidget {
   final Node from, to;
+  final bool needsAccessible;
 
-  const NavPage(this.from, this.to, {super.key});
+  const NavPage(this.from, this.to, this.needsAccessible, {super.key});
 
   @override
   State<NavPage> createState() => _NavPageState(from, to);
@@ -20,29 +21,29 @@ class _NavPageState extends State<NavPage> {
 
   _NavPageState(Node from, Node to) {
     floor = from.floor;
-    path =
-        DijkstraWalk(uniKonstanz.nodes, uniKonstanz.edges).dijkstra(from, to);
-    Future.delayed(
-        const Duration(seconds: 100), () => _updateImageSize(Duration.zero));
+    path = DijkstraWalk(uniKonstanz.nodes, uniKonstanz.edges)
+        .dijkstra(from, to, false);
   }
 
   void _updateImageSize(Duration _) {
     final size = _imageKey.currentContext?.size;
     if (size == null) return;
     if (imageSize != size) {
-      imageSize = size;
-      // When the window is resized using keyboard shortcuts (e.g. Rectangle.app),
-      // The widget won't rebuild AFTER this callback. Therefore, the new
-      // image size is not used to update the bounding box drawing.
-      // So we call setState
-      setState(() {});
+      setState(() {
+        imageSize = size;
+      });
     }
   }
 
   @override
-  Widget build(BuildContext context) {
+  void didChangeDependencies() {
     MediaQuery.of(context); // Trigger rebuild when window is resized.
     WidgetsBinding.instance.addPostFrameCallback(_updateImageSize);
+    super.didChangeDependencies();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Navigation"),

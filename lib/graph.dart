@@ -35,24 +35,22 @@ class Graph {
     nodes = nodeData
         .trim()
         .split("\n")
-        .where((e) => e.indexOf(RegExp(r',')) != 0 && e.isNotEmpty)
+        .where((e) => e.isNotEmpty && !e.startsWith(','))
         .map((e) => Node.fromCSV(e.split(separator)))
         .toList();
     edges = edgeData
         .trim()
         .split("\n")
-        .where((e) => e.indexOf(RegExp(r',')) != 0 && e.isNotEmpty)
+        .where((e) => e.isNotEmpty && !e.startsWith(','))
         .map((e) => Edge.fromCSV(e.split(separator), nodes))
         .toList();
   }
 
-  List<Node> search(String input, bool needsAccessible) {
+  List<Node> search(String input) {
     String processedName = input.toLowerCase().replaceAll(RegExp(r'\s'), "");
-
     return nodes
         .where((n) =>
             !notSearchable.contains(n.type) &&
-            (!needsAccessible || n.accessible) &&
             n.processedNames.any((element) => element.contains(processedName)))
         .toList();
   }

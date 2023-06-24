@@ -20,6 +20,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   Node? from, to;
+  bool needsAccessible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +32,7 @@ class _HomeState extends State<Home> {
         padding: const EdgeInsets.all(40),
         child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               buildSearchBar(context, "Current Location", true, [
                 IconButton(
@@ -42,12 +44,22 @@ class _HomeState extends State<Home> {
                     icon: const Icon(Icons.swap_vert))
               ]),
               buildSearchBar(context, "Target", false, []),
+              Row(
+                children: [
+                  Checkbox(
+                      value: needsAccessible,
+                      onChanged: (value) => setState(() {
+                            needsAccessible = value!;
+                          })),
+                  const Text("Accessible")
+                ],
+              ),
               ElevatedButton(
                   onPressed: from == null || to == null || from == to
                       ? null
                       : () => Navigator.of(context).push(MaterialPageRoute(
                           builder: (BuildContext context) =>
-                              NavPage(from!, to!))),
+                              NavPage(from!, to!, needsAccessible))),
                   child: const Text("Find path"))
             ]),
       ),

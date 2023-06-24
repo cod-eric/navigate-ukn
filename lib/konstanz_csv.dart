@@ -1,6 +1,6 @@
 const String separator = ',';
 
-const String konstanzNodes = """0,Immobetriebe Empfang,0,hallway,TRUE,5,5,
+const String konstanzNodes = """0,Immobetriebe Empfang,0,room,TRUE,5,5,
 1,Immobetriebe Büro,0,room,TRUE,10,5,
 2,Farm Kueche,0,room,TRUE,15,5,0.01
 3,Farm Buero Annabell Schaefer und Stephanie Hoffmann,0,room,TRUE,17,5,0.02
