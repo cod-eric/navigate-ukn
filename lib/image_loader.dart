@@ -1,3 +1,5 @@
+//no longer really in use
+
 import 'graph.dart';
 import 'dart:io';
 import 'dart:js';
@@ -24,7 +26,7 @@ class ImageLoader {
     //create list of offset points to be drawn (takes result of dijkstra-call as param)
     List<Offset> pathAsOffsets = [];
     for (Node n in path) {
-      pathAsOffsets.add(Offset(n.x, n.y));
+      pathAsOffsets.add(Offset(n.x as double, n.y as double));
     }
 
 

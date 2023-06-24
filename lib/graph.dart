@@ -22,6 +22,7 @@ class Graph {
         .trim()
         .split("\n")
         .skip(1) // skip header
+        .where((e) => e.isNotEmpty)
         .map((e) => Node.fromCSV(e.split(separator)))
         .toList();
     edges = edgeData
@@ -56,8 +57,8 @@ class Node {
   late final List<String> searchKeywords;
   late final List<String> processedNames;
   late final String processedName;
-  late final int x;
-  late final int y;
+  late final double x;
+  late final double y;
 
   Node.fromCSV(List<String> data) {
     id = nextId++;
