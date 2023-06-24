@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 import 'graph.dart';
 
@@ -17,9 +16,10 @@ class RoomInputForm extends StatefulWidget {
 class RoomInputField extends State<RoomInputForm> {
   static const int maxItems = 5;
   List<Node> _options = uniKonstanz.nodes;
+  bool needsAccessible = false;
 
   List<Node> search(String input) {
-    return uniKonstanz.search(input, true /*defualt, TODO: change*/);
+    return uniKonstanz.search(input, needsAccessible);
   }
 
   @override
@@ -38,12 +38,19 @@ class RoomInputField extends State<RoomInputForm> {
               labelText: widget.placeholder,
             ),
           ),
+          ToggleButtons(
+              isSelected: [needsAccessible],
+              onPressed: (index) => setState(() {
+                    needsAccessible = !needsAccessible;
+                  }),
+              children: const [Text("Accessible")]),
           const Text("Available Options:"),
           // TODO Gabriel Scrollable
           ListView.builder(
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
-            itemCount: min(MediaQuery.of(context).size.height ~/ 100, _options.length), //_options.length,
+            itemCount: min(MediaQuery.of(context).size.height ~/ 100,
+                _options.length), //_options.length,
             itemBuilder: (context, index) {
               var node = _options[index];
               return ListTile(
