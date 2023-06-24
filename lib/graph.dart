@@ -38,12 +38,13 @@ class Graph {
         .toList();
   }
 
-  List<Node> search(String input, bool allowDisabled) {
+  List<Node> search(String input, bool needsAccessible) {
     String processedName = input.toLowerCase().replaceAll(RegExp(r'\s'), "");
 
     return nodes
         .where((n) =>
             !notSearchable.contains(n.type) &&
+            (!needsAccessible || n.accessible) &&
             n.processedNames.any((element) => element.contains(processedName)))
         .toList();
   }
@@ -54,7 +55,7 @@ class Node {
   late final String name;
   late final int floor;
   late final NodeType type;
-  late final bool allowDisabled;
+  late final bool accessible;
   late final List<String> searchKeywords;
   late final List<String> processedNames;
   late final double x;
@@ -65,7 +66,7 @@ class Node {
     name = data[1];
     floor = int.parse(data[2]);
     type = NodeType.values.byName(data[3]);
-    allowDisabled = bool.parse(data[4], caseSensitive: false);
+    accessible = bool.parse(data[4], caseSensitive: false);
     x = double.parse(data[5]);
     y = double.parse(data[6]);
     searchKeywords = data.sublist(7);
