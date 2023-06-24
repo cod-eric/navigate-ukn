@@ -29,6 +29,7 @@ class Graph {
         .trim()
         .split("\n")
         .skip(1) // skip header
+        .where((e) => e.isNotEmpty)
         .map((e) => Edge.fromCSV(e.split(separator), nodes))
         .toList();
   }
@@ -48,7 +49,6 @@ class Graph {
 }
 
 class Node {
-  static int nextId = 0;
   late final int id;
   late final String name;
   late final int floor;
@@ -61,14 +61,14 @@ class Node {
   late final double y;
 
   Node.fromCSV(List<String> data) {
-    id = nextId++;
-    name = data[0];
-    floor = int.parse(data[1]);
-    type = NodeType.values.byName(data[2]);
-    allowDisabled = bool.parse(data[3], caseSensitive: false);
-    x = int.parse(data[4]);
-    y = int.parse(data[5]);
-    searchKeywords = data.sublist(6);
+    id = int.parse(data[0]);
+    name = data[1];
+    floor = int.parse(data[2]);
+    type = NodeType.values.byName(data[3]);
+    allowDisabled = bool.parse(data[4], caseSensitive: false);
+    x = double.parse(data[5]);
+    y = double.parse(data[6]);
+    searchKeywords = data.sublist(7);
     processedName = name.toLowerCase().replaceAll(RegExp(r'\s'), "");
     processedNames = List.generate(
         searchKeywords.length,
@@ -101,8 +101,10 @@ class Edge {
     from = nodes[int.parse(data[0])];
     to = nodes[int.parse(data[1])];
     weight = int.parse(data[2]);
-    if (data.length >= 3) {
+    if (data.length > 3) {
       allowDisabled = bool.parse(data[3], caseSensitive: false);
+    } else {
+      allowDisabled = false;
     }
   }
 }

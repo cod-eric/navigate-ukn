@@ -24,4 +24,15 @@ const String konstanzNodes = """id,name,floor,type,barrier-free,keywords
 20,Toilette Frauen,0,toilet,TRUE,11,11,
 21,Aufzug,0,elevator,TRUE,11,11,
 """;
-const String konstanzEdges = "from,to,weight";
+const String konstanzEdges = """from,to,weight
+0,1,2
+0,3,6
+2,9,3
+4,3,5
+3,4,2
+1,2,3
+3,2,1
+0,2,1
+3,4,1
+3,2,6
+4,5,10""";
