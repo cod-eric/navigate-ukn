@@ -1,16 +1,8 @@
 # navigate_ukn
 
-A new Flutter project.
+A tool to navigate the University of Constance, even without an internet connection.
 
-## Getting Started
+## Short description
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+*navigateUKN* is a webapp, with future plans to be released as an Android and iOS app, which implements Dijkstra's algorithm over a stored graph of rooms, across floors and buildings.
+It was developed during the Hack and Harvest 2023 hackathon.
