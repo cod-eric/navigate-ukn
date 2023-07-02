@@ -12,7 +12,12 @@ enum NodeType {
   shower
 }
 
-Graph uniKonstanz = Graph.fromString(konstanzNodes, konstanzEdges);
+Graph uniKonstanz = Graph.fromString(
+  konstanzNodes,
+  konstanzEdges,
+  60,
+  20,
+);
 
 class Tuple<T, R> {
   Tuple(this.one, this.two);
@@ -22,21 +27,27 @@ class Tuple<T, R> {
 }
 
 class Graph {
-  Graph(this.nodes, this.edges);
-
-  late final List<Node> nodes;
-  late final List<Edge> edges;
   static const List<NodeType> notSearchable = [
     NodeType.hallway,
     NodeType.stairs,
   ];
 
-  Graph.fromString(String nodeData, String edgeData) {
+  late final List<Node> nodes;
+  late final List<Edge> edges;
+
+  Graph(this.nodes, this.edges);
+
+  Graph.fromString(
+    String nodeData,
+    String edgeData,
+    double widthScale,
+    double heightScale,
+  ) {
     nodes = nodeData
         .trim()
         .split("\n")
         .where((e) => e.isNotEmpty && !e.startsWith(','))
-        .map((e) => Node.fromCSV(e.split(separator)))
+        .map((e) => Node.fromCSV(e.split(separator), widthScale, heightScale))
         .toList();
     edges = edgeData
         .trim()
@@ -67,14 +78,14 @@ class Node {
   late final double x;
   late final double y;
 
-  Node.fromCSV(List<String> data) {
+  Node.fromCSV(List<String> data, double widthScale, double heightScale) {
     id = int.parse(data[0]);
     name = data[1];
     floor = int.parse(data[2]);
     type = NodeType.values.byName(data[3]);
     accessible = bool.parse(data[4], caseSensitive: false);
-    x = double.parse(data[5]);
-    y = double.parse(data[6]);
+    x = double.parse(data[5]) / widthScale;
+    y = double.parse(data[6]) / heightScale;
     searchKeywords = data.sublist(7);
     processedNames = List.generate(
         searchKeywords.length,

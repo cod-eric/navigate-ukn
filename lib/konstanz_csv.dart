@@ -27,8 +27,8 @@ const String konstanzNodes = """0,Immobetriebe Empfang,0,room,TRUE,5,5,
 ,,,,,,,
 25,Aufzug West ,0,elevator,TRUE,8,15,
 26,Putzen,0,cleaning,TRUE,52,17,
-27,Treppe West ,0,stairs,FALSE,2,17,
-28,Treppe Ost ,0,stairs,FALSE,58,17,
+27,Treppe West,0,stairs,FALSE,2,17,
+28,Treppe Ost,0,stairs,FALSE,58,17,
 29,Toilette Männer West,0,toilet,FALSE,8,17,
 30,Toilette Frauen West,0,toilet,FALSE,8,19,
 31,,0,hallway,TRUE,5,20,
@@ -52,6 +52,10 @@ const String konstanzNodes = """0,Immobetriebe Empfang,0,room,TRUE,5,5,
 49,,0,hallway,TRUE,57,10,
 50,,0,hallway,TRUE,55,15,
 ,,,,,,,,
+100,Treppe West,1,stairs,FALSE,2,17,
+101,1. Stock,1,room,TRUE,40,13,
+200,Treppe West,2,stairs,FALSE,2,17,
+201,2. Stock,2,room,TRUE,25,7,
 """;
 const String konstanzEdges = """
 0,34,1
@@ -81,6 +85,10 @@ const String konstanzEdges = """
 25,33,1
 26,50,1
 27,32,1
+27,100,1
+100,101,1
+100,200,1
+200,201,1
 28,50,1
 29,32,1
 30,31,1

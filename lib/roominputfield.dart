@@ -4,8 +4,9 @@ import 'graph.dart';
 
 class RoomInputForm extends StatefulWidget {
   final String placeholder;
+  final Graph graph;
 
-  const RoomInputForm(this.placeholder, {super.key});
+  const RoomInputForm(this.placeholder, this.graph, {super.key});
 
   @override
   RoomInputField createState() => RoomInputField();
@@ -13,15 +14,24 @@ class RoomInputForm extends StatefulWidget {
 
 class RoomInputField extends State<RoomInputForm> {
   static const int maxItems = 5;
-  List<Node> _options = uniKonstanz.nodes;
+  late List<Node> _options;
 
   List<Node> search(String input) {
-    return uniKonstanz.search(input);
+    return widget.graph.search(input);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+     _options = widget.graph.nodes;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Select ${widget.placeholder}"),
+      ),
       body: Column(
         children: [
           TextFormField(
@@ -31,9 +41,6 @@ class RoomInputField extends State<RoomInputForm> {
                 _options = search(value);
               });
             },
-            decoration: InputDecoration(
-              labelText: widget.placeholder,
-            ),
           ),
           const Text("Available Options:"),
           Expanded(

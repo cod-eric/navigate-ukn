@@ -21,6 +21,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   Node? from, to;
   bool needsAccessible = false;
+  Graph graph = uniKonstanz;
 
   @override
   Widget build(BuildContext context) {
@@ -58,8 +59,10 @@ class _HomeState extends State<Home> {
                   onPressed: from == null || to == null || from == to
                       ? null
                       : () => Navigator.of(context).push(MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              NavPage(from!, to!, needsAccessible))),
+                          builder: (BuildContext context) => const NavPage(),
+                          settings: RouteSettings(
+                            arguments: [graph, from!, to!, needsAccessible],
+                          ))),
                   child: const Text("Find path"))
             ]),
       ),
@@ -80,7 +83,7 @@ class _HomeState extends State<Home> {
       hintText: node == null ? hintText : node.name,
       onTap: () async {
         var node = await Navigator.of(context).push(MaterialPageRoute<Node?>(
-            builder: (BuildContext context) => RoomInputForm(hintText)));
+            builder: (BuildContext context) => RoomInputForm(hintText, graph)));
         if (node != null) {
           setState(() {
             if (isFrom) {
